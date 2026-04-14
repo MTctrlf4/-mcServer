@@ -1,9 +1,8 @@
 #!/bin/bash
 
-usrpath = "~"
+usrpath="$HOME"
 
-if command -v docker >/dev/null 2>&1; then
- #!/bin/bash
+if ! command -v docker >/dev/null 2>&1; then
 set -e  # interrompe lo script se un comando fallisce
 
 # 1. Aggiorna i pacchetti e installa le dipendenze
@@ -35,9 +34,10 @@ echo "Installazione completata. Esegui 'newgrp docker' o fai logout/login per ap
 fi
 
 read -p "nome variabile: " DIRECTORY
-pathh = $usrpath+$DIRECTORY
+pathh="${usrpath}/${DIRECTORY}"
 
-mkdir pathh
-cd pathh
+mkdir "$pathh"
+cd "$pathh"
 
 touch compose.yml
+echo "Directory creata e compose.yml pronto in: $pathh"
