@@ -41,3 +41,36 @@ cd "$pathh"
 
 touch compose.yml
 echo "Directory creata e compose.yml pronto in: $pathh"
+
+
+echo "
+services:
+  mc:
+    image: itzg/minecraft-server:latest
+    tty: true
+    stdin_open: true
+    ports:
+      - "25565:25565"
+    environment:
+      EULA: "TRUE"
+      MEMORY: "6144M"
+      MAX_PLAYERS: "10"
+      MOTD: "minecraft"
+      USE_AIKAR_FLAGS: "true"
+      USE_MEOWICE_FLAGS: "true"
+      DIFFICULTY: "2"
+      SIMULATION_DISTANCE: "16"
+      VIEW_DISTANCE: "16"
+      LEVEL_TYPE: "amplified"
+      RCON_CMDS_STARTUP: |-
+        pregen start 100000
+      RCON_CMDS_ON_DISCONNECT: |-
+        gamerule playersSleepingPercentage 1
+      RCON_CMDS_FIRST_CONNECT: |-
+        pregen stop
+      RCON_CMDS_LAST_DISCONNECT: |-
+        pregen start 100000
+      MAX_BUILD_HEIGHT: "1024"
+    volumes:
+      - "./data:/data"
+" >> compose.yml
