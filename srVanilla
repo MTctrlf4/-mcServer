@@ -1,38 +1,5 @@
 #!/bin/bash
 
-usrpath="$HOME"
-
-if ! command -v docker >/dev/null 2>&1; then
-set -e  # interrompe lo script se un comando fallisce
-
-# 1. Aggiorna i pacchetti e installa le dipendenze
-sudo apt-get update
-sudo apt-get install -y ca-certificates curl gnupg
-
-# 2. Crea la directory per le chiavi GPG
-sudo install -m 0755 -d /etc/apt/keyrings
-
-# 3. Scarica e aggiunge la chiave GPG di Docker 
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | \
-  sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-# 4. Aggiunge il repository Docker
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-# 5. Installa Docker
-sudo apt-get update
-sudo apt-get install -y docker-ce docker-ce-cli containerd.io \
-  docker-buildx-plugin docker-compose-plugin
-
-# 6. Aggiunge l'utente corrente al gruppo docker
-sudo usermod -aG docker $USER
-
-echo "Installazione completata. Esegui 'newgrp docker' o fai logout/login per applicare il gruppo."
-fi
-
 read -p "nome variabile: " DIRECTORY
 pathh="${usrpath}/${DIRECTORY}"
 
